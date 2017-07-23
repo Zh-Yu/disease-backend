@@ -1,0 +1,24 @@
+{
+  "name": "disease-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Backlighting-Neo/disease-backend.git"
+  },
+  "author": "KevinTang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Backlighting-Neo/disease-backend/issues"
+  },
+  "homepage": "https://github.com/Backlighting-Neo/disease-backend#readme",
+  "dependencies": {
+    "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.2.1"
+  }
+}
