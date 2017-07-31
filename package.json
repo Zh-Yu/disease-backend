@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/Backlighting-Neo/disease-backend#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-cors": "0.0.16",
     "koa-router": "^7.2.1",
+    "koa2-cors": "^2.0.3",
     "mysql": "^2.13.0"
   }
 }
