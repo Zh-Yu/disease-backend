@@ -15,7 +15,7 @@ router.get('/patient', async (ctx, next) => {
 		idquery:{},
 		namequery:{}
 	}
-	if (store.getPatientSummaryByID(ctx.request.query.id).length > 0) {
+	if (ctx.request.query.id) {
 		ctx.response.body.idquery = (await store.getPatientSummaryByID(ctx.request.query.id))[0];   //通过id查询
 	}
 	// if(store.getPatientSummaryByName(ctx.request.query.name).length > 0){
