@@ -12,10 +12,20 @@ async function getPatientSummaryByName(name){       //name拿到汉字
 			b.type,c.location FROM a_sum_patient_info as a join a_type_desc as b on a.type=b.index join 
 			a_location_desc as c on a.location = c.index	 WHERE a.name='${name}'`); 
 	}
- 
+
+async function getPatientList(page){
+	return await db.query(`SELECT * FROM a_sum_patient_info as a join a_type_desc as b on a.type=b.index join 
+			a_location_desc as c on a.location = c.index order by id LIMIT 10 OFFSET ${(page-1)*10}`)
+}
+
+async function getTypeDesc(){
+	return await db.query(`SELECT * FROM a_type_desc`)
+}
 module.exports = {
 	getPatientSummaryByID,
-	getPatientSummaryByName
+	getPatientSummaryByName,
+	getPatientList,
+	getTypeDesc
 };
 
 
