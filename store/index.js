@@ -13,9 +13,14 @@ async function getPatientSummaryByName(name){       //name拿到汉字
 			a_location_desc as c on a.location = c.index	 WHERE a.name='${name}'`); 
 	}
  
+async function getList(page){
+	return await db.query(`Select * from a_sum_patient_info ORDER BY id LIMIT 10 OFFSET ${(page-1) *10}`)
+}
+
 module.exports = {
 	getPatientSummaryByID,
-	getPatientSummaryByName
+	getPatientSummaryByName,
+	getList
 };
 
 

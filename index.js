@@ -24,6 +24,11 @@ router.get('/patient', async (ctx, next) => {
 	
 });
 
+router.get('/patientList', async(ctx, next) =>{
+	const page_number = ctx.request.query.page || 1;
+	ctx.response.body = await store.getList(page_number);
+
+})
 
 
 app.use(router.routes());
