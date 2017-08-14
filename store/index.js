@@ -21,11 +21,16 @@ async function getPatientList(page){
 async function getTypeDesc(){
 	return await db.query(`SELECT * FROM a_type_desc`)
 }
+
+async function getLocationDesc(){
+	return await db.query(`SELECT * FROM a_location_desc`)
+}
 module.exports = {
 	getPatientSummaryByID,
 	getPatientSummaryByName,
 	getPatientList,
-	getTypeDesc
+	getTypeDesc,
+	getLocationDesc
 };
 
 
