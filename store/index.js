@@ -18,6 +18,10 @@ async function getPatientList(page){
 			a_location_desc as c on a.location = c.index order by id LIMIT 10 OFFSET ${(page-1)*10}`)
 }
 
+async function getCount(){
+	return await db.query(`SELECT count(id) as count FROM a_sum_patient_info`)
+}
+
 async function getTypeDesc(){
 	return await db.query(`SELECT * FROM a_type_desc`)
 }
@@ -29,6 +33,7 @@ module.exports = {
 	getPatientSummaryByID,
 	getPatientSummaryByName,
 	getPatientList,
+	getCount,
 	getTypeDesc,
 	getLocationDesc
 };

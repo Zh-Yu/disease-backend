@@ -28,9 +28,11 @@ router.get('/patientList', async (ctx, next) => {
 	ctx.response.body = {
 		pagecontent:{},
 		typecontent:{},
-		locationcontent:{}
+		locationcontent:{},
+		count: 0
 	};
 	ctx.response.body.pagecontent = await store.getPatientList(ctx.request.query.page);   //查询每页显示10个	
+	ctx.response.body.count = await store.getCount()
 	ctx.response.body.typecontent = await store.getTypeDesc();   //类型筛选
 	ctx.response.body.locationcontent = await store.getLocationDesc();   //类型筛选
 });
