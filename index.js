@@ -28,28 +28,28 @@ router.get('/patient', async (ctx, next) => {
 
 router.get('/patientList', async (ctx, next) => {
 	ctx.response.body = {
-		pagecontent:{},
+		// pagecontent:{},
+		patientList:{},
 		typecontent:{},
 		locationcontent:{},
-		count: 0
 	};
 
-	let [pagecontent, count, typecontent, locationcontent] = await Promise.all([
-		store.getPatientList(ctx.request.query.page),
-		store.getCount(),
-		store.getTypeDesc(),
+	let [patientList, typecontent, locationcontent] = await Promise.all([
+		// store.getPatientList(ctx.request.query.page),   
+		store.getPatientList(),                                        
+		store.getTypeDesc(),                                
 		store.getLocationDesc()
 	]);
 
-	ctx.response.body.pagecontent = pagecontent;   //查询每页显示10个	
-	ctx.response.body.count = count;
+	// ctx.response.body.pagecontent = pagecontent;   //查询每页显示10个	
+	ctx.response.body.patientList = patientList;
 	ctx.response.body.typecontent = typecontent;   //类型筛选
-	ctx.response.body.locationcontent = locationcontent;   //类型筛选
+	ctx.response.body.locationcontent = locationcontent;   //位置筛选
 });
 
-router.get('/patientfilter', async (ctx, next) => {
-	ctx.response.body = await store.getfilter(ctx.request.query.command);
-})
+// router.get('/patientfilter', async (ctx, next) => {
+// 	ctx.response.body = await store.getfilter(ctx.request.query.command);
+// })                  //数据库做筛选
 
 app.use(router.routes());
 app.listen(3000);
