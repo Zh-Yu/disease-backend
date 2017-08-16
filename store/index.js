@@ -29,13 +29,19 @@ async function getTypeDesc(){
 async function getLocationDesc(){
 	return await db.query(`SELECT * FROM a_location_desc`)
 }
+
+async function getfilter(commanddata){
+	return await db.query(`SELECT * FROM a_sum_patient_info as a join a_type_desc as b on a.type=b.index WHERE b.type='${commanddata}'`)
+}
+
 module.exports = {
 	getPatientSummaryByID,
 	getPatientSummaryByName,
 	getPatientList,
 	getCount,
 	getTypeDesc,
-	getLocationDesc
+	getLocationDesc,
+	getfilter
 };
 
 

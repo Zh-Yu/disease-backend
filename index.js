@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const Router = require('koa-router');
 const cors = require('koa2-cors');
+const logger = require('koa-logger');
 
 const app = new Koa();
 const router = new Router();
@@ -9,6 +10,7 @@ const store = require('./store');
 
 
 app.use(cors());
+app.use(logger());
 
 router.get('/patient', async (ctx, next) => {
 	ctx.response.body = {
@@ -45,7 +47,9 @@ router.get('/patientList', async (ctx, next) => {
 	ctx.response.body.locationcontent = locationcontent;   //类型筛选
 });
 
-
+router.get('/patientfilter', async (ctx, next) => {
+	ctx.response.body = await store.getfilter(ctx.request.query.command);
+})
 
 app.use(router.routes());
 app.listen(3000);
