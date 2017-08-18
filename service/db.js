@@ -18,21 +18,6 @@ const query = sql => {                                       //返回promise对�
 }
       
 
-// const query = function(sql){
-// 	return new Promise(
-// 		function(resolve, reject){
-// 			connection.query(sql, function(error, results, fields){
-// 				if(error) reject(error);
-// 					else resolve(results);
-// 				}
-// 			)
-// 		}
-// 	)
-
-// }
-
-
-
 module.exports = {
 	query
 };

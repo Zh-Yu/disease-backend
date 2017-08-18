@@ -51,5 +51,6 @@ router.get('/patientList', async (ctx, next) => {
 // 	ctx.response.body = await store.getfilter(ctx.request.query.command);
 // })                  //数据库做筛选
 
+
 app.use(router.routes());
 app.listen(3000);
