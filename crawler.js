@@ -54,6 +54,6 @@ cities.forEach(function(city){
 })
 
 Promise.all(cityArray)              //promise.all([function]) 参数是数组，数组里面是函数，函数return Promise
-	.then(function(html){              
+	.then(function([html]){              
 		getPollution(html);
 	})
