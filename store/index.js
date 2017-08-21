@@ -40,14 +40,20 @@ async function getLocationDesc(){
 
 
 async function insertPollution(body){
-	var userAddSql = 'INSERT INTO b_pollution_sum(station,AQI,airQuality,primaryPollution,PM2.5,PM10,CO,NO2,O3,SO2,O3average) VALUES(1,?,?,?,?,?,?,?,?,?,?)';
+	var userAddSql = 'INSERT INTO b_pollution_sum(AQI,airQuality,primaryPollution,PM25,PM10,CO,NO2,O3,SO2,O3average,station) VALUES(?,?,?,?,?,?,?,?,?,?,?)';
 	var params = [];
+	var stationindex = 1;
 	body.map((item, index) =>{
-		params.push(body[index]);
-		if(index % 9 == 0 && index > 0){
+		if(item =='_'||item =='—')
+			item = -1;
+		params.push(item);
+		if(params.length === 10){
+			params.push(stationindex);
 			let sql = db.format(userAddSql, params);
 			db.query(sql);
+			// console.log(params)
 			params = [];
+			stationindex += 1;
 		}
 	})		
 }
