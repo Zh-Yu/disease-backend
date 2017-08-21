@@ -1,4 +1,5 @@
 const db = require('../service/db');
+const crawler = require('../crawler.js');
 
 async function getPatientSummaryByID(id) {     
 	if(isNaN(id)) return;
@@ -37,6 +38,18 @@ async function getLocationDesc(){
 	return await db.query(`SELECT * FROM a_location_desc`)
 }
 
+
+async function insertPollution(body){
+	var userAddSql = 'INSERT INTO b_pollution_sum(station,AQI,airQuality,primaryPollution,PM2.5,PM10,CO,NO2,O3,SO2,O3average) VALUES(1,?,?,?,?,?,?,?,?,?,?)';
+	var params = [];
+	body.map((item, index) =>{
+		params.push(body[index]);
+		if(index % 9 == 0 && index > 0){
+			return await db.query(userAddSql,params);
+			params = [];			
+		}
+	})		
+}
 // async function getfilter(commanddata){
 // 	return await db.query(`SELECT * FROM a_sum_patient_info as a join a_type_desc as b on a.type=b.index WHERE b.type='${commanddata}'`)
 // }
@@ -47,7 +60,8 @@ module.exports = {
 	getPatientList,
 	// getCount,
 	getTypeDesc,
-	getLocationDesc
+	getLocationDesc,
+	insertPollution
 };
 
 
