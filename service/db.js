@@ -19,5 +19,6 @@ const query = sql => {                                       //返回promise对�
       
 
 module.exports = {
-	query
+	query,
+	format: mysql.format
 };

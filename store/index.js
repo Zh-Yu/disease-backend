@@ -45,8 +45,9 @@ async function insertPollution(body){
 	body.map((item, index) =>{
 		params.push(body[index]);
 		if(index % 9 == 0 && index > 0){
-			return await db.query(userAddSql,params);
-			params = [];			
+			let sql = db.format(userAddSql, params);
+			db.query(sql);
+			params = [];
 		}
 	})		
 }
