@@ -1,7 +1,7 @@
 var http = require('http');   
 var cheerio = require('cheerio');
 var baseUrl = 'http://www.pm25.in/';
-var cities =['tianjin'];
+var cityName = 'tianjin';
 
 const store = require('./store');
 
@@ -18,7 +18,8 @@ const store = require('./store');
 // }]
 
 
-function getPollution(html){
+async function getPollution(html){
+	console.log('开始解析Html数据');
 	var arrhead = [];
 	var arrbody = [];
 	var $ = cheerio.load(html);                  //分解Dom结构                               //表头内容
@@ -35,7 +36,8 @@ function getPollution(html){
 			arrbody.splice(index,1);
 		}
 	})
-	store.insertPollution(arrbody);
+	console.log(`获取到${arrbody.length}个单元格的数据`);
+	await store.insertPollution(arrbody);
 }
 
 function getCityAsync(url) {
@@ -47,6 +49,7 @@ function getCityAsync(url) {
 				html += data;
 			})
 			res.on("end", function(){
+				console.log('Html文件下载完毕')
 				resolve(html);
 			})
 		}).on("error", function(e){
@@ -57,13 +60,10 @@ function getCityAsync(url) {
 	// body...
 }                                           //爬到页面的html
 
-var cityArray = [];
-cities.forEach(function(city){
-	cityArray.push(getCityAsync(baseUrl + city))
+getCityAsync(baseUrl + cityName)              //promise.all([function]) 参数是数组，数组里面是函数，函数return Promise
+.then(function(html){              
+	return getPollution(html);
 })
-
-Promise.all(cityArray)              //promise.all([function]) 参数是数组，数组里面是函数，函数return Promise
-	.then(function([html]){              
-		getPollution(html);
-	})
-
+.then(() => {
+	console.log('所有任务执行完毕');
+})

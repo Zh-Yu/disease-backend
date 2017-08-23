@@ -43,6 +43,7 @@ async function insertPollution(body){                               //插入空�
 	var userAddSql = 'INSERT INTO b_pollution_sum(aqi,airquality,primarypollution,pm25,pm10,co,no2,o3,o3average,so2,station) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
 	var params = [];
 	var stationindex = 1;
+	var resultPromises = [];
 	body.map((item, index) =>{
 		if(item =='_'||item =='—')
 			item = -1;
@@ -50,12 +51,13 @@ async function insertPollution(body){                               //插入空�
 		if(params.length === 10){
 			params.push(stationindex);
 			let sql = db.format(userAddSql, params);
-			db.query(sql);
-			// console.log(params)
+			console.log(`准备执行SQL ${sql}`);
+			resultPromises.push(db.query(sql));
 			params = [];
 			stationindex += 1;
 		}
-	})		
+	})
+	return await Promise.all(resultPromises);
 }                                  
 // async function getfilter(commanddata){
 // 	return await db.query(`SELECT * FROM a_sum_patient_info as a join a_type_desc as b on a.type=b.index WHERE b.type='${commanddata}'`)
