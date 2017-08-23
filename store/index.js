@@ -39,7 +39,7 @@ async function getLocationDesc(){
 }
 
 
-async function insertPollution(body){                               //插入空气污染物数据
+function insertPollution(body){                               //插入空气污染物数据
 	var userAddSql = 'INSERT INTO b_pollution_sum(aqi,airquality,primarypollution,pm25,pm10,co,no2,o3,o3average,so2,station) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
 	var params = [];
 	var stationindex = 1;
@@ -57,7 +57,7 @@ async function insertPollution(body){                               //插入空�
 			stationindex += 1;
 		}
 	})
-	return await Promise.all(resultPromises);
+	return Promise.all(resultPromises);
 }                                  
 // async function getfilter(commanddata){
 // 	return await db.query(`SELECT * FROM a_sum_patient_info as a join a_type_desc as b on a.type=b.index WHERE b.type='${commanddata}'`)

@@ -4,6 +4,7 @@ var baseUrl = 'http://www.pm25.in/';
 var cityName = 'tianjin';
 
 const store = require('./store');
+const db = require('./service/db');
 
 
 // allInfo:[{
@@ -66,4 +67,5 @@ getCityAsync(baseUrl + cityName)              //promise.all([function]) 参数�
 })
 .then(() => {
 	console.log('所有任务执行完毕');
+	db.connection.destroy();
 })
