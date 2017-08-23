@@ -39,8 +39,8 @@ async function getLocationDesc(){
 }
 
 
-async function insertPollution(body){
-	var userAddSql = 'INSERT INTO b_pollution_sum(AQI,airQuality,primaryPollution,PM25,PM10,CO,NO2,O3,SO2,O3average,station) VALUES(?,?,?,?,?,?,?,?,?,?,?)';
+async function insertPollution(body){                               //插入空气污染物数据
+	var userAddSql = 'INSERT INTO b_pollution_sum(aqi,airquality,primarypollution,pm25,pm10,co,no2,o3,o3average,so2,station) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
 	var params = [];
 	var stationindex = 1;
 	body.map((item, index) =>{
@@ -56,10 +56,14 @@ async function insertPollution(body){
 			stationindex += 1;
 		}
 	})		
-}
+}                                  
 // async function getfilter(commanddata){
 // 	return await db.query(`SELECT * FROM a_sum_patient_info as a join a_type_desc as b on a.type=b.index WHERE b.type='${commanddata}'`)
 // }
+
+async function getPollutionAll(){
+	return await db.query(`SELECT * FROM b_pollution_sum as a join in b_station_desc as b on a.station = b.index WHERE date_format(a.date,'%Y-%m-%d') = new Date().toLocaleDateString()`)
+}
 
 module.exports = {
 	getPatientSummaryByID,
@@ -68,7 +72,8 @@ module.exports = {
 	// getCount,
 	getTypeDesc,
 	getLocationDesc,
-	insertPollution
+	insertPollution,
+	getPollutionAll
 };
 
 

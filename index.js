@@ -50,7 +50,9 @@ router.get('/patientList', async (ctx, next) => {
 // router.get('/patientfilter', async (ctx, next) => {
 // 	ctx.response.body = await store.getfilter(ctx.request.query.command);
 // })                  //数据库做筛选
-
+router.get('/pollutionAll', async(ctx, next) =>{
+	ctx.response.body = await store.getPollutionAll();
+})
 
 app.use(router.routes());
 app.listen(3000);
