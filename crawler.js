@@ -5,13 +5,6 @@ var cities =['tianjin'];
 
 const store = require('./store');
 
-// function filterChapters(html){
-// 	var $ = cheerio.load(html);    //分解Dom结构
-// 	var chapters = $('h2.1');
-// 	var title = $('a.J-media-item.icon-video type').text();
-// 	var number =parseInt($($('meta-value js-learn-num')[0]).text().trim(),10);
-// }
-
 
 // allInfo:[{
 // 	station:'',

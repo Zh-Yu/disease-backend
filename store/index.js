@@ -1,5 +1,5 @@
 const db = require('../service/db');
-const crawler = require('../crawler.js');
+
 
 async function getPatientSummaryByID(id) {     
 	if(isNaN(id)) return;
@@ -62,7 +62,16 @@ async function insertPollution(body){                               //插入空�
 // }
 
 async function getPollutionAll(){
-	return await db.query(`SELECT * FROM b_pollution_sum as a join in b_station_desc as b on a.station = b.index WHERE date_format(a.date,'%Y-%m-%d') = new Date().toLocaleDateString()`)
+	var timetoday = new Date().toLocaleDateString();
+	var arrtoday = [];
+	arr = timetoday.split('-');
+	if(arr[1].length < 2)
+		arr[1] = '0' + arr[1];
+	if(arr[2].length < 2)
+		arr[2] = '0' + arr[2];
+	var timechange = arr[0] +'/' + arr[1] +'/'+ arr[2];
+	return await db.query(`SELECT date,b.station,aqi,airquality,pm25,pm10,co,no2,o3,o3average,so2 FROM 
+		b_pollution_sum as a join b_station_desc as b on a.station = b.index WHERE date_format(a.date,'%Y/%m/%d') = '${timechange}'`)
 }
 
 module.exports = {
