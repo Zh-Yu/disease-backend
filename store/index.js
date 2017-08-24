@@ -40,15 +40,15 @@ async function getLocationDesc(){
 
 
 function insertPollution(body){                               //插入空气污染物数据
-	var userAddSql = 'INSERT INTO b_pollution_sum(aqi,airquality,primarypollution,pm25,pm10,co,no2,o3,o3average,so2,station) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
+	var userAddSql = 'INSERT INTO b_pollution_sum(aqi,pm25,pm10,co,no2,so2,o3,o3average,airquality,station) VALUES (?,?,?,?,?,?,?,?,?,?)';
 	var params = [];
 	var stationindex = 1;
 	var resultPromises = [];
 	body.map((item, index) =>{
-		if(item =='_'||item =='—')
+		if(item =='-')
 			item = -1;
 		params.push(item);
-		if(params.length === 10){
+		if(params.length === 9){
 			params.push(stationindex);
 			let sql = db.format(userAddSql, params);
 			console.log(`准备执行SQL ${sql}`);
@@ -72,7 +72,7 @@ async function getPollutionToday(){
 	if(arr[2].length < 2)
 		arr[2] = '0' + arr[2];
 	var timechange = arr[0] +'/' + arr[1] +'/'+ arr[2];
-	return await db.query(`SELECT date,b.station,aqi,airquality,pm25,pm10,co,no2,o3,o3average,so2 FROM 
+	return await db.query(`SELECT date_format(a.date,'%Y/%m/%d'),b.station,aqi,airquality,pm25,pm10,co,no2,o3,so2,o3average FROM 
 		b_pollution_sum as a join b_station_desc as b on a.station = b.index WHERE date_format(a.date,'%Y/%m/%d') = '${timechange}'`)
 }
 
@@ -81,8 +81,8 @@ async function getStation(){
 }
 
 async function getByStation(stationname){
-	return await db.query(`SELECT b.station,date,aqi,airquality,pm25,pm10,co,no2,o3,o3average,so2 FROM 
-		b_pollution_sum as a join b_station_desc as b on a.station = b.index WHERE b.station = '${stationname}'`)
+	return await db.query(`SELECT date_format(a.date,'%Y/%m/%d'),aqi,airquality,pm25,pm10,co,no2,o3,o3average,so2 FROM 
+		b_pollution_sum as a join b_station_desc as b on a.station = b.index WHERE b.station ='${stationname}'`)
 }
 
 module.exports = {
