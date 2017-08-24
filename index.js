@@ -50,9 +50,17 @@ router.get('/patientList', async (ctx, next) => {
 // router.get('/patientfilter', async (ctx, next) => {
 // 	ctx.response.body = await store.getfilter(ctx.request.query.command);
 // })                  //数据库做筛选
-router.get('/pollutionAll', async(ctx, next) =>{
-	ctx.response.body = await store.getPollutionAll();
+router.get('/pollutionToday', async(ctx, next) =>{
+	ctx.response.body = await store.getPollutionToday();           //取今天的污染物数据
 })
+
+router.get('/getStation', async(ctx, next) =>{
+	ctx.response.body = await store.getStation();     //取观测站名称
+})
+
+router.get('/getbystation', async(ctx, next) =>{
+	ctx.response.body = await store.getByStation(ctx.request.query.stationName);
+})                                                                 //取观测站污染物数据
 
 app.use(router.routes());
 app.listen(3000);

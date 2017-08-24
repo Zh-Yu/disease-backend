@@ -63,7 +63,7 @@ function insertPollution(body){                               //插入空气污�
 // 	return await db.query(`SELECT * FROM a_sum_patient_info as a join a_type_desc as b on a.type=b.index WHERE b.type='${commanddata}'`)
 // }
 
-async function getPollutionAll(){
+async function getPollutionToday(){
 	var timetoday = new Date().toLocaleDateString();
 	var arrtoday = [];
 	arr = timetoday.split('-');
@@ -76,6 +76,15 @@ async function getPollutionAll(){
 		b_pollution_sum as a join b_station_desc as b on a.station = b.index WHERE date_format(a.date,'%Y/%m/%d') = '${timechange}'`)
 }
 
+async function getStation(){
+	return await db.query(`SELECT station FROM b_station_desc`)
+}
+
+async function getByStation(stationname){
+	return await db.query(`SELECT b.station,date,aqi,airquality,pm25,pm10,co,no2,o3,o3average,so2 FROM 
+		b_pollution_sum as a join b_station_desc as b on a.station = b.index WHERE b.station = '${stationname}'`)
+}
+
 module.exports = {
 	getPatientSummaryByID,
 	getPatientSummaryByName,
@@ -84,7 +93,9 @@ module.exports = {
 	getTypeDesc,
 	getLocationDesc,
 	insertPollution,
-	getPollutionAll
+	getPollutionToday,
+	getStation,
+	getByStation
 };
 
 
