@@ -27,25 +27,39 @@ router.get('/patient', async (ctx, next) => {
 });
 
 router.get('/patientList', async (ctx, next) => {
+	// ctx.response.body = {
+	// 	// pagecontent:{},
+	// 	patientList:{},
+	// 	typecontent:{},
+	// 	locationcontent:{},
+	// };
+
+	// let [patientList, typecontent, locationcontent] = await Promise.all([
+	// 	// store.getPatientList(ctx.request.query.page),   
+	// 	store.getPatientList(),                                        
+	// 	store.getTypeDesc(),                                
+	// 	store.getLocationDesc()
+	// ]);
+
+	// // ctx.response.body.pagecontent = pagecontent;   //查询每页显示10个	
+	// ctx.response.body.patientList = patientList;
+	// ctx.response.body.typecontent = typecontent;   //类型筛选
+	// ctx.response.body.locationcontent = locationcontent;   //位置筛选
+	ctx.response.body = await store.getPatientList();
+});
+
+router.get('/listDesc', async(ctx, next) =>{
 	ctx.response.body = {
-		// pagecontent:{},
-		patientList:{},
 		typecontent:{},
 		locationcontent:{},
 	};
-
-	let [patientList, typecontent, locationcontent] = await Promise.all([
-		// store.getPatientList(ctx.request.query.page),   
-		store.getPatientList(),                                        
-		store.getTypeDesc(),                                
-		store.getLocationDesc()
-	]);
-
-	// ctx.response.body.pagecontent = pagecontent;   //查询每页显示10个	
-	ctx.response.body.patientList = patientList;
+	let [typecontent, locationcontent] = await Promise.all([
+			store.getTypeDesc(),                                
+			store.getLocationDesc()
+		]);
 	ctx.response.body.typecontent = typecontent;   //类型筛选
 	ctx.response.body.locationcontent = locationcontent;   //位置筛选
-});
+})
 
 // router.get('/patientfilter', async (ctx, next) => {
 // 	ctx.response.body = await store.getfilter(ctx.request.query.command);
